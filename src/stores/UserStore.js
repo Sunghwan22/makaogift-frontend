@@ -4,15 +4,16 @@ export default class UserStore {
   constructor() {
     this.name = '';
     this.amount = 0;
+    this.errorMessage = '';
 
     this.listeners = new Set();
   }
 
-  async login({ id, password }) {
+  async login({ identifier, password }) {
     try {
       const { accessToken, name, amount }
       // eslint-disable-next-line operator-linebreak
-      = await apiService.postSession({ id, password });
+      = await apiService.postSession({ identifier, password });
 
       this.name = name;
       this.amount = amount;

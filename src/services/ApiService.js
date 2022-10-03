@@ -7,15 +7,20 @@ const baseurl = config.apiBaseUrl;
 export default class ApiService {
   constructor() {
     this.accessToken = '';
+    this.amount = 0;
   }
 
   setAccessToken(accessToken) {
     this.accessToken = accessToken;
   }
 
-  async postSession({ id, password }) {
+  setAmount(amount) {
+    this.amount = amount;
+  }
+
+  async postSession({ identifier, password }) {
     const url = `${baseurl}/session`;
-    const { data } = await axios.post(url, { id, password });
+    const { data } = await axios.post(url, { identifier, password });
 
     return {
       accessToken: data.accessToken,
