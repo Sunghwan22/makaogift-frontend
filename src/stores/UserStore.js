@@ -9,6 +9,26 @@ export default class UserStore {
     this.listeners = new Set();
   }
 
+  // eslint-disable-next-line consistent-return
+  async signUp({
+    name, identifier, password, confirmPassword,
+  }) {
+    try {
+      const { userName, amount } = await apiService.postUser({
+        name, identifier, password, confirmPassword,
+      });
+
+      this.name = userName;
+      this.amount = amount;
+      console.log(userName);
+      return userName;
+    } catch (e) {
+      const { message } = e.response.data;
+      this.errorMessage = message;
+      this.publish();
+    }
+  }
+
   async login({ identifier, password }) {
     try {
       const { accessToken, name, amount }

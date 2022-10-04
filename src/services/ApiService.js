@@ -28,6 +28,18 @@ export default class ApiService {
       amount: data.amount,
     };
   }
+
+  async postUser({
+    name, identifier, password, confirmPassword,
+  }) {
+    const url = `${baseurl}/user`;
+    const { data } = await axios.post(url, {
+      name, identifier, password, confirmPassword,
+    });
+
+    const { userName, amount } = data;
+    return { userName, amount };
+  }
 }
 
 export const apiService = new ApiService();
