@@ -40,7 +40,7 @@ export default function Header() {
             <Link to="/">홈</Link>
           </li>
           <li>
-            <Link to="/">스토어</Link>
+            <Link to="/products">스토어</Link>
           </li>
           <li>
             <Link to="/">주문조회</Link>

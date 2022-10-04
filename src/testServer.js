@@ -31,6 +31,19 @@ const server = setupServer(
     }
     return res(ctx.status(400));
   }),
+
+  rest.get(`${baseurl}/products`, async (req, res, ctx) => res(ctx.json({
+    products: [
+      {
+        id: 1,
+        company: '애플',
+        name: 'M2맥북프로',
+        option: '그라파이트',
+        price: 1_500_000,
+        description: '갖고 싶다',
+      },
+    ],
+  }))),
 );
 
 export default server;

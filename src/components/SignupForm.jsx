@@ -18,9 +18,9 @@ export default function SignupForm() {
     const userName = await userStore.signUp({
       name, identifier, password, confirmPassword,
     });
-    console.log(userName);
+
     if (userName) {
-      navigate('/');
+      navigate('/signupcomplete');
     }
   };
 

@@ -1,17 +1,20 @@
 Feature('Signup');
 
 Before(({ I }) => {
+  I.setupDatabase();
   I.amOnPage('/');
   I.click('회원가입');
 });
 
 Scenario('올바른 회원가입', ({ I }) => {
   I.fillField('이름', '조성환');
-  I.fillField('아이디', 'tidls7938');
+  I.fillField('아이디', 'tidls3987');
   I.fillField('비밀번호', 'Tjdghks245@');
   I.fillField('비밀번호 확인', 'Tjdghks245@');
 
   I.click('button[name="submit-button"]');
+
+  I.see('회원가입 완료');
 });
 
 Scenario('이름을 공백으로 진행한 회원가입', ({ I }) => {

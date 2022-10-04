@@ -33,6 +33,6 @@ test('SignUp', async () => {
   fireEvent.click(screen.getByRole('button', { name: '회원가입' }));
 
   await waitFor(() => {
-    expect(navigate).toBeCalledWith('/');
+    expect(navigate).toBeCalledWith('/signupcomplete');
   });
 });
