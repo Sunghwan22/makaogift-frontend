@@ -5,22 +5,57 @@ export default class ProductStore {
     this.products = [];
     this.product = {};
 
+    this.quantity = 1;
+    this.totalPrice = 0;
+
+    this.pageNumber = 0;
+    this.pageNumbers = [];
+
     this.listeners = new Set();
   }
 
-  async fetchProduct(productId) {
-    // this.product = {};
-    // this.publish();
+  resetQntityAndTotalPrice() {
+    this.quantity = 1;
+    this.totalPrice = this.product.price;
+    this.publish();
+  }
 
+  addQuantity() {
+    this.quantity += 1;
+    this.totalPrice += this.product.price;
+    this.publish();
+  }
+
+  reduceQuantity() {
+    if (this.quantity === 1) {
+      return;
+    }
+
+    this.quantity -= 1;
+    this.totalPrice -= this.product.price;
+    this.publish();
+  }
+
+  async fetchProduct(productId) {
     this.product = await apiService.fetchProduct(productId);
+    this.quantity = 1;
+    this.totalPrice = this.product.price;
     this.publish();
   }
 
   async fetchProducts() {
     this.products = [];
-    this.publish();
+    const { products, pageNumber } = await apiService.fetchProducts();
 
-    this.products = await apiService.fetchProducts();
+    this.products = products;
+
+    this.pageNumbers = [...Array(pageNumber)].map((number, index) => index + 1);
+
+    this.publish();
+  }
+
+  async changePageNumber(number) {
+    this.products = await apiService.changePage(number);
     this.publish();
   }
 

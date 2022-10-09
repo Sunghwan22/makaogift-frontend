@@ -9,6 +9,15 @@ export default class UserStore {
     this.listeners = new Set();
   }
 
+  async fetchUser(accessToken) {
+    const { name, amount } = await apiService.fetchUser(accessToken);
+
+    this.name = name;
+    this.amount = amount;
+
+    this.publish();
+  }
+
   // eslint-disable-next-line consistent-return
   async signUp({
     name, identifier, password, confirmPassword,
@@ -20,7 +29,7 @@ export default class UserStore {
 
       this.name = userName;
       this.amount = amount;
-      console.log(userName);
+
       return userName;
     } catch (e) {
       const { message } = e.response.data;

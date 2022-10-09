@@ -7,15 +7,22 @@ const baseurl = config.apiBaseUrl;
 export default class ApiService {
   constructor() {
     this.accessToken = '';
-    this.amount = 0;
   }
 
   setAccessToken(accessToken) {
     this.accessToken = accessToken;
   }
 
-  setAmount(amount) {
-    this.amount = amount;
+  async fetchUser(accessToken) {
+    const url = `${baseurl}/user/me`;
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const { name, amount } = data;
+
+    return { name, amount };
   }
 
   async postSession({ identifier, password }) {
@@ -44,9 +51,21 @@ export default class ApiService {
   async fetchProducts() {
     const url = `${baseurl}/products`;
     const { data } = await axios.get(url);
+    const { products, pageNumber } = data;
 
-    const { products } = data;
-    return products;
+    return { products, pageNumber };
+  }
+
+  async changePage(number) {
+    const url = `${baseurl}/products`;
+    // const params = { page: number };
+    const { data } = await axios.get(url, {
+      params: {
+        page: number,
+      },
+    });
+
+    return data.products;
   }
 
   async fetchProduct(productId) {
@@ -54,8 +73,67 @@ export default class ApiService {
     const { data } = await axios.get(url);
 
     const product = data;
-    console.log(product);
+
     return product;
+  }
+
+  async createOrder({
+    productId,
+    quantity,
+    totalPrice,
+    name,
+    address,
+    message,
+  }) {
+    const url = `${baseurl}/orders`;
+    await axios.post(url, {
+      productId, quantity, totalPrice, name, address, message,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+  }
+
+  async fetchOrderHistories(accessToken) {
+    const url = `${baseurl}/orders`;
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const { orderHistories, pageNumber } = data;
+    return { orderHistories, pageNumber };
+  }
+
+  // 지금 여기서 문제가 발생한다
+  async orderHistoryChangePage(accessToken, number) {
+    // console.log(accessToken);
+    const orderHistoryPageConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        page: number,
+      },
+    };
+
+    const url = `${baseurl}/orders`;
+
+    const { data } = await axios.get(url, orderHistoryPageConfig);
+
+    // const { data } = await axios.get(url, orderHistoryPageConfig);
+
+    return data.orderHistories;
+  }
+
+  async fetchOrderHistory(orderHistoryId) {
+    const url = `${baseurl}/orders/${orderHistoryId}`;
+    const { data } = await axios.get(url);
+
+    const orderHistory = data;
+    return orderHistory;
   }
 }
 

@@ -2,8 +2,12 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import useProductStore from '../hooks/useProductStore';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
+import OrderDetailPage from '../pages/OrderDetailPage';
+import OrderListPage from '../pages/OrderListPage';
+import OrderPage from '../pages/OrderPage';
 import ProductPage from '../pages/ProductPage';
 import ProductsPage from '../pages/ProductsPage';
 import SignupCompletePage from '../pages/SignupCompletePage';
@@ -23,6 +27,7 @@ export default function App() {
 
   useEffect(() => {
     apiService.setAccessToken(accessToken);
+    apiService.fetchUser(accessToken);
   }, []);
 
   return (
@@ -38,6 +43,12 @@ export default function App() {
           <Route
             path="/products/:productId"
             element={<ProductPage />}
+          />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/orders" element={<OrderListPage />} />
+          <Route
+            path="/orders/:orderHistoryId"
+            element={<OrderDetailPage />}
           />
         </Routes>
       </Main>

@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import useUserStore from '../hooks/useUserStore';
+import { apiService } from '../services/ApiService';
 
 import numberFormat from '../utils/NumberFormat';
 
@@ -18,14 +20,14 @@ const Container = styled.div`
 `;
 
 export default function Header() {
+  const userStore = useUserStore();
+
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
-  const [amount, setAmount] = useLocalStorage('amount', '');
 
   const navigate = useNavigate();
-  // 지금 영속성 구현이 안되있구나 amount를 구현 시켜야 겠내
   const handleLogout = () => {
     setAccessToken('');
-    setAmount('');
+    apiService.setAccessToken('');
     navigate('/');
   };
 
@@ -34,7 +36,7 @@ export default function Header() {
       <nav>
         <ul>
           <li>
-            <Link to="/">선물하기</Link>
+            <Link to="/products">선물하기</Link>
           </li>
           <li>
             <Link to="/">홈</Link>
@@ -43,14 +45,21 @@ export default function Header() {
             <Link to="/products">스토어</Link>
           </li>
           <li>
-            <Link to="/">주문조회</Link>
+            <Link
+              to={accessToken ? (
+                '/orders'
+              ) : '/login'}
+            >
+              주문조회
+
+            </Link>
           </li>
           {accessToken ? (
             <div>
               <p>
                 내 잔액:
                 {' '}
-                {numberFormat(amount)}
+                {numberFormat(userStore.amount)}
                 원
               </p>
               <button

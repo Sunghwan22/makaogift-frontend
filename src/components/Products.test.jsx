@@ -2,6 +2,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { productStore } from '../stores/ProductStore';
 import Products from './Products';
 
+const navigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  useNavigate() {
+    return navigate;
+  },
+}));
+
 test('Products', async () => {
   productStore.fetchProducts();
 

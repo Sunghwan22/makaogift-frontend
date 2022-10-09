@@ -113,5 +113,5 @@ Scenario('이미 있는 아이디로 회원가입을 진행할 경우', ({ I }) 
 
   I.click('button[name="submit-button"]');
 
-  I.see('해당 아이디는 사용할 수 없습니다'); 
+  I.see('해당 아이디는 사용할 수 없습니다');
 });

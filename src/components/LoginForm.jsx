@@ -1,18 +1,23 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import useUserStore from '../hooks/useUserStore';
+import { apiService } from '../services/ApiService';
 
 export default function LoginForm() {
   const navigate = useNavigate();
 
   const userStore = useUserStore();
 
-  const [, setAccessToken] = useLocalStorage('accessToken', '');
-  const [, setAmount] = useLocalStorage('amount', '');
+  const location = useLocation();
 
-  const { register, handleSubmit } = useForm();
+  const productId = location.state;
+
+  const [, setAccessToken] = useLocalStorage('accessToken', '');
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     const { identifier, password } = data;
@@ -20,8 +25,13 @@ export default function LoginForm() {
 
     if (accessToken) {
       setAccessToken(accessToken);
-      setAmount(userStore.amount);
+      apiService.setAccessToken(accessToken);
       navigate('/');
+      // todo 여기서 fetch
+    }
+
+    if (productId) {
+      navigate(`/products/${productId}`);
     }
   };
 
@@ -33,7 +43,11 @@ export default function LoginForm() {
           <label htmlFor="input-identifier">아이디</label>
           <input
             id="input-identifier"
-            {...register('identifier')}
+            {...register('identifier', {
+              required: {
+                value: true, message: '아이디를 입력해주세요',
+              },
+            })}
             placeholder="아이디"
           />
         </div>
@@ -41,19 +55,25 @@ export default function LoginForm() {
           <label htmlFor="input-password">비밀번호</label>
           <input
             id="input-password"
-            {...register('password')}
+            {...register('password', {
+              required: {
+                value: true, message: '비밀번호를 입력해주세요',
+              },
+            })}
             placeholder="비밀번호"
+            type="password"
           />
         </div>
-        {userStore.errorMessage === '아이디를 입력해주세요' ? (
-          <p>{userStore.errorMessage}</p>
-        ) : null}
-        {userStore.errorMessage === '비밀번호를 입력해주세요' ? (
-          <p>{userStore.errorMessage}</p>
-        ) : null}
-        {userStore.errorMessage === '아이디 혹은 비밀번호가 맞지 않습니다' ? (
-          <p>{userStore.errorMessage}</p>
-        ) : null}
+        {errors.identifier ? (
+          <p>{errors.identifier.message}</p>
+        )
+          : errors.password ? (
+            <p>{errors.password.message}</p>
+          )
+            : userStore.errorMessage === '아이디 혹은 비밀번호가 맞지 않습니다' ? (
+              <p>{userStore.errorMessage}</p>
+            )
+              : null}
         <button type="submit">
           로그인하기
         </button>

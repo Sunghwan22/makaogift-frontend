@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
 import Product from '../components/Product';
 import useProductStore from '../hooks/useProductStore';
+import useUserStore from '../hooks/useUserStore';
 
 export default function ProductPage() {
+  const [accessToken] = useLocalStorage('accessToken', '');
   const productStore = useProductStore();
+  const userStore = useUserStore();
 
   const { productId } = useParams();
-
-  //   const location = useLocation();
-
-  //   const productId = location.state !== null
-  //     ? location.state.productId
-  //     : Number(location.pathname.split('/')[2]);
-
+  // fetchUser도 같이 해줘야 한다
   useEffect(() => {
     productStore.fetchProduct(productId);
+    productStore.resetQntityAndTotalPrice();
+    userStore.fetchUser(accessToken);
   }, []);
 
   return (

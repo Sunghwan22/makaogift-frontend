@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useProductStore from '../hooks/useProductStore';
-import numberFormat from '../utils/NumberFormat';
+import { useLocalStorage } from 'usehooks-ts';
+import useOrderStore from '../hooks/useOrderStore';
 
 const Container = styled.div`
   width: 80%;
@@ -16,39 +16,41 @@ const Image = styled.img`
   background-size: contain;
 `;
 
-export default function Products() {
+export default function OrderList() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+
   const navigate = useNavigate();
 
-  const productStore = useProductStore();
+  const orderStore = useOrderStore();
 
-  const { products, pageNumbers } = productStore;
+  const { orderHistories, pageNumbers } = orderStore;
 
-  const handleClickProduct = (productid) => {
-    navigate(`/products/${productid}`, {
+  if (orderHistories.length === 0) {
+    return <p>주문한 내역이 없습니다</p>;
+  }
+
+  const handleClickPageNumber = (number) => {
+    orderStore.changePageNumber(accessToken, number);
+    navigate(`/orders?page=${number}`);
+  };
+
+  const handleClickOrderHistory = (orderHistoryId) => {
+    navigate(`/orders/${orderHistoryId}`, {
       state: {
-        productid,
+        orderHistoryId,
       },
     });
   };
 
-  const handleClickPageNumber = (number) => {
-    productStore.changePageNumber(number);
-    navigate(`/products?page=${number}`);
-  };
-
-  if (products.length === 0) {
-    return <p>상품이 존재하지 않습니다</p>;
-  }
-
   return (
     <Container>
-      <p>인기선물을 한 자리에 모았어요</p>
+      <h2>내가 주문한 내역입니다</h2>
       <UL>
-        {products.map((product) => (
-          <li key={product.id}>
+        {orderHistories.map((orderHistory) => (
+          <li key={orderHistory.id}>
             <button
               type="button"
-              onClick={() => handleClickProduct(product.id)}
+              onClick={() => handleClickOrderHistory(orderHistory.id)}
             >
               <Image
                 src="https://cdn.pixabay.com/photo/2022/09/28/05/53/squirrel-7484292_960_720.jpg"
@@ -57,13 +59,15 @@ export default function Products() {
                 width="50px"
                 height="50px"
               />
-              {product.company}
+              {orderHistory.company}
               <p>
-                {product.option}
+                {orderHistory.productName}
+                {orderHistory.option}
               </p>
               <p>
-                {numberFormat(product.price)}
-                원
+                To.
+                {' '}
+                {orderHistory.name}
               </p>
             </button>
           </li>
