@@ -3,7 +3,73 @@
 import { watch } from 'fs';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import useUserStore from '../hooks/useUserStore';
+
+const Container = styled.div`
+  height: 90vh;
+  min-height: 100%;
+  padding: 0 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  div {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+`;
+
+const H2 = styled.h2`
+   display: flex;
+   justify-content: center;
+   font-size: 1.5em;
+   padding-right: 2em;
+   padding-left: 2em;
+   padding-bottom: .3em;
+   border-bottom: solid 1px #22DAAB;
+   margin-bottom: 1.5em;
+`;
+
+const Error = styled.p`
+   font-size : .5em;
+   color: red;
+   margin-top: .5em;
+`;
+
+const Input = styled.input`
+   border: ${(props) => (props.error ? '1px solid #F00' : '1px solid#CCC')}; 
+   outline: none;
+   padding: 0.7em;
+   margin-bottom: .4em;
+`;
+
+const Label = styled.label`
+   font-size: .3em;
+   margin-bottom: .6em;
+   color: #A0A0A0;
+   font-weight: bold;
+`;
+
+const Guide = styled.p`
+  font-size: .3em;
+  color: #A0A0A0;
+`;
+
+const SignupButton = styled.button`
+  font-size: .7em;
+  color: white;
+  background: #22DAAB;
+  margin-top: 1em;
+  padding : 1em;
+  border: none;
+  border-radius: .5em;
+  cursor: pointer;
+`;
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -27,14 +93,13 @@ export default function SignupForm() {
   };
 
   return (
-    <div>
+    <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>SIGN UP</h2>
+        <H2>SIGN UP</H2>
         <div>
-          <label htmlFor="input-name">이름</label>
-          <input
+          <Label htmlFor="input-name">이름</Label>
+          <Input
             id="input-name"
-            placeholder="이름"
             {...register(
               'name',
               {
@@ -42,15 +107,16 @@ export default function SignupForm() {
                 pattern: { value: /^[ㄱ-ㅎ|가-힣]{3,7}$/, message: '이름을 다시 확인해주세요' },
               },
             )}
+            error={errors.name}
           />
           {errors.name ? (
-            <p>{errors.name.message}</p>
+            <Error>{errors.name.message}</Error>
           )
-            : <p>3~7자까지 한글만 사용 가능</p>}
+            : <Guide>3~7자까지 한글만 사용 가능</Guide>}
         </div>
         <div>
-          <label htmlFor="input-identifier">아이디</label>
-          <input
+          <Label htmlFor="input-identifier">아이디</Label>
+          <Input
             id="input-identifier"
             {...register(
               'identifier',
@@ -59,19 +125,19 @@ export default function SignupForm() {
                 pattern: { value: /^[a-z0-9]{4,16}$/, message: '아이디를 다시 확인해주세요' },
               },
             )}
+            error={errors.identifier}
           />
           {userStore.errorMessage === '해당 아이디는 사용할 수 없습니다' ? (
-            <p>{userStore.errorMessage}</p>
+            <Error>{userStore.errorMessage}</Error>
           ) : errors.identifier ? (
-            <p>{errors.identifier.message}</p>
+            <Error>{errors.identifier.message}</Error>
           )
-            : <p>영문소문자/숫자, 4~16자만 사용 가능</p>}
+            : <Guide>영문소문자/숫자, 4~16자만 사용 가능</Guide>}
         </div>
         <div>
-          <label htmlFor="input-password">비밀번호</label>
-          <input
+          <Label htmlFor="input-password">비밀번호</Label>
+          <Input
             id="input-password"
-            placeholder="비밀번호"
             {...register(
               'password',
               {
@@ -82,15 +148,16 @@ export default function SignupForm() {
                 },
               },
             )}
+            error={errors.password}
           />
           {errors.password ? (
-            <p>{errors.password.message}</p>
+            <Error>{errors.password.message}</Error>
           )
-            : <p>8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다</p>}
+            : <Guide>8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다</Guide>}
         </div>
         <div>
-          <label htmlFor="input-confirm-password">비밀번호 확인</label>
-          <input
+          <Label htmlFor="input-confirm-password">비밀번호 확인</Label>
+          <Input
             id="input-confirm-password"
             {...register(
               'confirmPassword',
@@ -102,20 +169,23 @@ export default function SignupForm() {
                 },
               },
             )}
+            error={errors.confirmPassword}
           />
           {userStore.errorMessage === '비밀번호가 일치하지 않습니다' ? (
-            <p>{userStore.errorMessage}</p>)
+            <Error>{userStore.errorMessage}</Error>)
             : errors.confirmPassword ? (
-              <p>{errors.confirmPassword.message}</p>
+              <Error>{errors.confirmPassword.message}</Error>
             ) : null}
         </div>
-        <button
-          type="submit"
-          name="submit-button"
-        >
-          회원가입
-        </button>
+        <div>
+          <SignupButton
+            type="submit"
+            name="submit-button"
+          >
+            회원가입
+          </SignupButton>
+        </div>
       </form>
-    </div>
+    </Container>
   );
 }

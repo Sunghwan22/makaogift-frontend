@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import { Reset } from 'styled-reset';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import OrderDetailPage from '../pages/OrderDetailPage';
@@ -13,24 +14,30 @@ import SignupCompletePage from '../pages/SignupCompletePage';
 import SignupPage from '../pages/SignupPage';
 import { apiService } from '../services/ApiService';
 import Header from './Header';
+import useUserStore from '../hooks/useUserStore';
 
 const Main = styled.main`
-  width: 90%;
-  height: 100%;
+  max-width: 1280px; 
+  min-height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 `;
 
 export default function App() {
+  const userStore = useUserStore();
+
   const [accessToken] = useLocalStorage('accessToken', '');
 
   useEffect(() => {
+    userStore.fetchUser(accessToken);
     apiService.setAccessToken(accessToken);
-    apiService.fetchUser(accessToken);
   }, []);
 
   return (
     <div>
+      <Reset />
       <Header />
       <Main>
         <Routes>
