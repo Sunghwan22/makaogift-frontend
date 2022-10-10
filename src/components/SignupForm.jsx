@@ -62,8 +62,8 @@ export default function SignupForm() {
           />
           {userStore.errorMessage === '해당 아이디는 사용할 수 없습니다' ? (
             <p>{userStore.errorMessage}</p>
-          ) : errors.userId ? (
-            <p>{errors.userId.message}</p>
+          ) : errors.identifier ? (
+            <p>{errors.identifier.message}</p>
           )
             : <p>영문소문자/숫자, 4~16자만 사용 가능</p>}
         </div>
@@ -104,8 +104,10 @@ export default function SignupForm() {
             )}
           />
           {userStore.errorMessage === '비밀번호가 일치하지 않습니다' ? (
-            <p>{userStore.errorMessage}</p>
-          ) : null}
+            <p>{userStore.errorMessage}</p>)
+            : errors.confirmPassword ? (
+              <p>{errors.confirmPassword.message}</p>
+            ) : null}
         </div>
         <button
           type="submit"

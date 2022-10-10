@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import useProductStore from '../hooks/useProductStore';
+import useUserStore from '../hooks/useUserStore';
+
 import numberFormat from '../utils/NumberFormat';
 
 export default function Product() {
+  const userStore = useUserStore();
+
   const [accessToken] = useLocalStorage('accessToken', '');
 
   const navigate = useNavigate();
@@ -30,6 +34,11 @@ export default function Product() {
     }
 
     if (accessToken) {
+      if (userStore.amount < totalPrice) {
+        productStore.setErrorMessage();
+        return;
+      }
+
       navigate('/order', {
         state: {
           product,
@@ -44,7 +53,7 @@ export default function Product() {
     <div>
       <p>{product.name}</p>
       <p>{product.option}</p>
-      <p>{`${product.price}원`}</p>
+      <p>{`${numberFormat(product.price)}원`}</p>
       <p>
         제조사
         {' '}
@@ -56,6 +65,7 @@ export default function Product() {
         </span>
         <button
           type="button"
+          name="minusQuantity-button"
           onClick={handleClickReduceQuantity}
         >
           -
@@ -63,6 +73,7 @@ export default function Product() {
         <span>{quantity}</span>
         <button
           type="button"
+          name="addQuantity-button"
           onClick={handleClickAddQuantity}
         >
           +
@@ -81,10 +92,13 @@ export default function Product() {
       <button
         type="button"
         onClick={handleClickPresent}
+        name="present-button"
       >
         선물하기
-
       </button>
+      {productStore.errorMessage ? (
+        <p>잔액이 부족하여 선물하기가 불가합니다</p>
+      ) : null}
     </div>
   );
 }

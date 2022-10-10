@@ -15,6 +15,7 @@ export default function ProductPage() {
   useEffect(() => {
     productStore.fetchProduct(productId);
     productStore.resetQntityAndTotalPrice();
+    productStore.resetErrorMessage();
     userStore.fetchUser(accessToken);
   }, []);
 

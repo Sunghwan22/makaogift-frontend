@@ -57,7 +57,8 @@ export default function Products() {
                 width="50px"
                 height="50px"
               />
-              {product.company}
+              <p>{product.name}</p>
+              <p>{product.company}</p>
               <p>
                 {product.option}
               </p>

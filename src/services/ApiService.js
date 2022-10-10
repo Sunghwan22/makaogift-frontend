@@ -132,8 +132,7 @@ export default class ApiService {
     const url = `${baseurl}/orders/${orderHistoryId}`;
     const { data } = await axios.get(url);
 
-    const orderHistory = data;
-    return orderHistory;
+    return data;
   }
 }
 

@@ -1,4 +1,5 @@
 import useOrderStore from '../hooks/useOrderStore';
+import numberFormat from '../utils/NumberFormat';
 
 export default function OrderDetail() {
   const orderStore = useOrderStore();
@@ -15,42 +16,43 @@ export default function OrderDetail() {
       </p>
       <div>
         <p>
-          구매수량 +
+          구매수량 :
           {' '}
           {orderHistory.quantity}
         </p>
       </div>
       <div>
         <p>
-          총 상품금액 +
+          총 상품금액 :
           {' '}
-          {orderHistory.totalPrice}
+          {numberFormat(orderHistory.totalPrice)}
+          원
         </p>
       </div>
       <div>
         <p>
-          구매일 +
+          구매일 :
           {' '}
           {orderHistory.createdAt}
         </p>
       </div>
       <div>
         <p>
-          받는 분 +
+          받는 분 :
           {' '}
           {orderHistory.name}
         </p>
       </div>
       <div>
         <p>
-          받는 분 주소 +
+          받는 분 주소 :
           {' '}
           {orderHistory.address}
         </p>
       </div>
       <div>
         <p>
-          받는 분께 보내는 메시지 +
+          받는 분께 보내는 메시지 :
           {' '}
           {orderHistory.message}
         </p>

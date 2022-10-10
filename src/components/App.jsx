@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
-import useProductStore from '../hooks/useProductStore';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import OrderDetailPage from '../pages/OrderDetailPage';

@@ -108,7 +108,10 @@ export default function Order() {
           />
           <p>100글자이내로 입력해주세요</p>
         </div>
-        <button type="submit">
+        <button
+          type="submit"
+          name="order-button"
+        >
           선물하기
         </button>
         {orderStore.errorMessage === '잔액이 부족하여 선물하기가 불가능합니다' ? (
