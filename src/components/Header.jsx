@@ -29,12 +29,17 @@ const MenuList = styled.li`
    text-decoration: none;
    cursor: pointer;
 
-       &:focus , &:hover{
+       &:focus , &:hover, &:visited{
         text-decoration: underline; text-decoration-color: #22DAAB;
         text-underline-position: under;
         text-decoration-thickness: .2em;
        }
     }
+
+  h2{
+    font-size: 1.3em;
+    font-weight: bold;
+  }
 
     padding-left: 1em;
 `;
@@ -79,7 +84,7 @@ export default function Header() {
       <Navigation>
         <ul>
           <MenuList>
-            <h3>선물하기</h3>
+            <h2>선물하기</h2>
           </MenuList>
           <MenuList>
             <Link to="/">홈</Link>

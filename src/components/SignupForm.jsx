@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import { watch } from 'fs';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +8,8 @@ import useUserStore from '../hooks/useUserStore';
 const Container = styled.div`
   height: 90vh;
   min-height: 100%;
-  padding: 0 40%;
+  width: 30vw;
+  padding-left: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,12 +27,14 @@ const Container = styled.div`
 const H2 = styled.h2`
    display: flex;
    justify-content: center;
+   width: 15vw;
    font-size: 1.5em;
+   padding-top: 1em;
    padding-right: 2em;
    padding-left: 2em;
    padding-bottom: .3em;
    border-bottom: solid 1px #22DAAB;
-   margin-bottom: 1.5em;
+   margin-bottom: 1em;
 `;
 
 const Error = styled.p`
@@ -44,7 +46,7 @@ const Error = styled.p`
 const Input = styled.input`
    border: ${(props) => (props.error ? '1px solid #F00' : '1px solid#CCC')}; 
    outline: none;
-   padding: 0.7em;
+   padding: 0.5em;
    margin-bottom: .4em;
 `;
 
@@ -76,7 +78,9 @@ export default function SignupForm() {
 
   const userStore = useUserStore();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({ reValidateMode: 'onSubmit' });
+  const {
+    register, watch, handleSubmit, formState: { errors },
+  } = useForm({ reValidateMode: 'onSubmit' });
 
   const onSubmit = async (data) => {
     const {
@@ -163,19 +167,16 @@ export default function SignupForm() {
               'confirmPassword',
               {
                 required: { value: true, message: '비밀번호를 입력해주세요' },
-                validated: {
-                  value: (value) => value === watch('password'),
-                  message: '비밀번호가 일치하지 않습니다',
-                },
+                validate: (value) => value === watch('password'),
               },
             )}
             error={errors.confirmPassword}
           />
-          {userStore.errorMessage === '비밀번호가 일치하지 않습니다' ? (
+          {errors.confirmPassword ? (
+            <Error>{errors.confirmPassword.message}</Error>
+          ) : userStore.errorMessage === '비밀번호가 일치하지 않습니다' ? (
             <Error>{userStore.errorMessage}</Error>)
-            : errors.confirmPassword ? (
-              <Error>{errors.confirmPassword.message}</Error>
-            ) : null}
+            : null}
         </div>
         <div>
           <SignupButton

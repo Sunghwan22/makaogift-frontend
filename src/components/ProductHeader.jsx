@@ -6,7 +6,7 @@ import LoginImage from '../assets/image4.jpeg';
 const Container = styled.div`
   width: 100vw;
   background: yellow;  
-  height: 30vh;
+  height: 25vh;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,7 @@ const Container = styled.div`
   align-items: flex-start;
   background-image: ${(props) => (props.accessToken ? `url(${LoginImage})` : `url(${Image})`)};
   background-size: cover;
+  margin-bottom: 2.5em;
 
   div {
     padding-left: 12em;
