@@ -70,6 +70,10 @@ const LastInformation = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  p:last-child {
+    color: #666666;
+  }
 `;
 
 export default function OrderDetail({ orderHistory }) {

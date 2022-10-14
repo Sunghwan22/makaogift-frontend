@@ -15,7 +15,7 @@ Scenario('visit homepage With login', ({ I }) => {
   I.click('로그인');
   I.login('tidls45');
 
-  // I.amOnPage('/');
-  // I.see(/내 잔액/);
-  // I.see('로그아웃');
+  I.amOnPage('/');
+  I.see(/내 잔액/);
+  I.see('로그아웃');
 });

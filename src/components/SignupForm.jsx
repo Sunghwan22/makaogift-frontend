@@ -71,6 +71,14 @@ const SignupButton = styled.button`
   border: none;
   border-radius: .5em;
   cursor: pointer;
+
+  &:hover{  
+    color : #006148
+  }
+
+  button:active{
+  background:#008C68;
+}
 `;
 
 export default function SignupForm() {
@@ -142,6 +150,7 @@ export default function SignupForm() {
           <Label htmlFor="input-password">비밀번호</Label>
           <Input
             id="input-password"
+            type="password"
             {...register(
               'password',
               {
@@ -163,6 +172,7 @@ export default function SignupForm() {
           <Label htmlFor="input-confirm-password">비밀번호 확인</Label>
           <Input
             id="input-confirm-password"
+            type="password"
             {...register(
               'confirmPassword',
               {
@@ -173,10 +183,10 @@ export default function SignupForm() {
             )}
             error={errors.confirmPassword}
           />
-          {errors.confirmPassword === '비밀번호를 입력해주세요' ? (
-            <Error>{errors.confirmPassword.message}</Error>
-          ) : errors.confirmPassword ? (
+          {errors.confirmPassword ? (
             <Error>비밀번호가 일치하지 않습니다</Error>
+          ) : errors.confirmPassword === '비밀번호를 입력해주세요' ? (
+            <Error>{errors.confirmPassword.message}</Error>
           ) : null}
         </div>
         <div>

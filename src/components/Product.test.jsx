@@ -1,5 +1,5 @@
 import {
-  fireEvent, render, screen, 
+  fireEvent, render, screen,
 } from '@testing-library/react';
 import Product from './Product';
 

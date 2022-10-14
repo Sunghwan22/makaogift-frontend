@@ -109,9 +109,7 @@ export default class ApiService {
     return { orderHistories, pageNumber };
   }
 
-  // 지금 여기서 문제가 발생한다
   async orderHistoryChangePage(accessToken, number) {
-    // console.log(accessToken);
     const orderHistoryPageConfig = {
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -120,6 +120,9 @@ const Error = styled.p`
    font-size : .5em;
    color: red;
    margin-top: .5em;
+   display: flex;
+   justify-content: center;
+   padding-top: 1em;
 `;
 
 const ProductImage = styled.div`

@@ -29,8 +29,9 @@ export default class OrderStore {
     address,
     message,
   }) {
+    this.errorMessage = '';
+
     try {
-      this.errorMessage = '';
       const { amount } = await apiService.createOrder({
         productId,
         quantity,

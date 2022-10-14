@@ -47,7 +47,7 @@ Scenario('비밀번호를 공백으로 진행한 회원가입', ({ I }) => {
 
   I.click('button[name="submit-button"]');
 
-  // I.see('비밀번호를 입력해주세요');
+  I.see('비밀번호를 입력해주세요');
 });
 
 Scenario('확인 비밀번호를 공백으로 진행한 회원가입', ({ I }) => {

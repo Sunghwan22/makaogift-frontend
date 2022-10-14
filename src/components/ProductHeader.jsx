@@ -17,7 +17,7 @@ const Container = styled.div`
   margin-bottom: 2.5em;
 
   div {
-    padding-left: 12em;
+    padding-left: 15em;
   }
 
   p {

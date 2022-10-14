@@ -76,17 +76,14 @@ const server = setupServer(
 
   rest.get(`${baseurl}/products/1`, async (request, response, context) => response(context.json({
     product: {
-
       id: 10,
       maker: '인사이트',
       name: 'The Pragmatic Programmer',
       price: 200,
       description: '20주년 기념판',
-
     },
   }))),
 
-  // productId, quantity, totalPrice, name, address, message,
   rest.post(`${baseurl}/orders`, async (req, res, ctx) => {
     const accessToken = await req.headers.get('Authorization')
       .substring('Bearer '.length);
@@ -96,19 +93,17 @@ const server = setupServer(
     } = await req.json();
 
     if (accessToken
-      && productId === 1 && quantity === 1 && totalPrice === 299000
+      && productId === 1 && quantity === 1 && totalPrice === 299_000
     && name === '문디야' && address === '울산광역시' && message === '니도 가온나') {
-      return res(ctx.json(
-        { amount: 299000 },
-      ));
+      return res(ctx.json({
+        amount: 299_000,
+      }));
     }
-    return null;
+    return res(ctx.status(400));
   }),
 
   rest.get(`${baseurl}/orders`, async (req, res, ctx) => {
     const accessToken = await req.headers.get('Authorization');
-
-    console.log(accessToken);
 
     if (accessToken === 'ACCESS.TOKEN') {
       return res(ctx.json({

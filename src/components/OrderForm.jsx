@@ -96,6 +96,13 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const AmountErrorMessage = styled.p`
+  display: flex;
+  justify-content: center;
+  padding-top: 1em;
+  padding-left: 1em;
+`;
+
 export default function OrderForm() {
   const [accessToken] = useLocalStorage('accessToken', '');
 
@@ -217,7 +224,7 @@ export default function OrderForm() {
             선물하기
           </Button>
           {orderStore.errorMessage === '잔액이 부족하여 선물하기가 불가능합니다' ? (
-            <p>{orderStore.errorMessage}</p>
+            <AmountErrorMessage>{orderStore.errorMessage}</AmountErrorMessage>
           ) : null}
         </ButtonArea>
       </form>

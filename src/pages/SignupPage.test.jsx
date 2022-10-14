@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import LoginPage from './LoginPage';
+import SignupPage from './SignupPage';
 
 const navigate = jest.fn();
 
@@ -11,10 +11,9 @@ jest.mock('react-router-dom', () => ({
     state: 1,
   }),
 }));
-test('LoginPage', () => {
-  render(<LoginPage />);
+test('SignupPage', () => {
+  render(<SignupPage />);
 
-  screen.getByText('USER LOGIN');
-  screen.getByText('로그인하기');
+  screen.getByText('SIGN UP');
   screen.getByText('회원가입');
 });

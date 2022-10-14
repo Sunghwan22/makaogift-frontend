@@ -14,7 +14,7 @@ const Container = styled.div`
   align-content: center;
 `;
 
-const Guide = styled.p`
+const Guide = styled.p` 
   margin-bottom: 2em;
 `;
 

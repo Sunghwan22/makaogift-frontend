@@ -71,6 +71,14 @@ const LoginButton = styled.button`
   border: none;
   border-radius: .5em;
   cursor: pointer;
+
+  &:hover{  
+    color : #006148
+  }
+
+  button:active{
+  background:#008C68;
+}
 `;
 
 export default function LoginForm() {
