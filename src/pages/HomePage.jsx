@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useLocalStorage } from 'usehooks-ts';
-import useUserStore from '../hooks/useUserStore';
-import GiftImage from '../assets/image5.png';
+
+const GiftImage = require('../assets/image5.png');
 
 const Container = styled.div`
   height: 90vh;
@@ -46,13 +44,6 @@ const ImageBox = styled.div`
 `;
 
 export default function HomePage() {
-  const userStore = useUserStore();
-  const [accessToken] = useLocalStorage('accessToken', '');
-
-  useEffect(() => {
-    userStore.fetchUser(accessToken);
-  }, []);
-
   return (
     <Container>
       <div>

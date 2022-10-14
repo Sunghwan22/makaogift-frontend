@@ -1,11 +1,11 @@
-// import { render, screen } from '@testing-library/react';
-// import App from './App';
+import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import App from './App';
 
-// test('App', () => {
-//   render(<App />);
-
-//   screen.getByText('Hello, world');
-// });
-
-// accessToken이 있을 때 는 로그아웃이 나오고
-// accessToken이 없으면 회원가입 로그인 버튼이 있어야 함
+test('App', () => {
+  render((
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  ));
+});

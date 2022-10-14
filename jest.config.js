@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',
-    './src/setupTestServer.js',
+    './src/setupTestServer',
   ],
   transform: {
     '^.+\\.jsx?$': ['@swc/jest', {
@@ -17,5 +17,6 @@ module.exports = {
         },
       },
     }],
+    '.+\\.(css|scss|png|jpg|svg|jpeg)$': 'jest-transform-stub',
   },
 };

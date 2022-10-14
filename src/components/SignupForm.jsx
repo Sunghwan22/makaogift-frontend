@@ -168,15 +168,16 @@ export default function SignupForm() {
               {
                 required: { value: true, message: '비밀번호를 입력해주세요' },
                 validate: (value) => value === watch('password'),
+                message: '비밀번호가 일치하지 않습니다',
               },
             )}
             error={errors.confirmPassword}
           />
-          {errors.confirmPassword ? (
+          {errors.confirmPassword === '비밀번호를 입력해주세요' ? (
             <Error>{errors.confirmPassword.message}</Error>
-          ) : userStore.errorMessage === '비밀번호가 일치하지 않습니다' ? (
-            <Error>{userStore.errorMessage}</Error>)
-            : null}
+          ) : errors.confirmPassword ? (
+            <Error>비밀번호가 일치하지 않습니다</Error>
+          ) : null}
         </div>
         <div>
           <SignupButton

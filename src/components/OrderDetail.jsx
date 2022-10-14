@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import useOrderStore from '../hooks/useOrderStore';
 import numberFormat from '../utils/NumberFormat';
 import Image from '../assets/드러그옴므.jpeg';
 
@@ -73,11 +72,7 @@ const LastInformation = styled.div`
   align-items: center;
 `;
 
-export default function OrderDetail() {
-  const orderStore = useOrderStore();
-
-  const { orderHistory } = orderStore;
-
+export default function OrderDetail({ orderHistory }) {
   return (
     <Container>
       <BackGround>

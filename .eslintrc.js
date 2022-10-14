@@ -44,5 +44,6 @@ module.exports = {
     'key-spacing': ['error', { mode: 'strict' }],
     'arrow-spacing': ['error', { before: true, after: true }],
     'jsx-a11y/label-has-associated-control': 'off',
+    'react/prop-types': 'off',
   },
 };

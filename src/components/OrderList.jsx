@@ -114,7 +114,7 @@ export default function OrderList() {
   const { orderHistories, pageNumbers } = orderStore;
 
   if (orderHistories.length === 0) {
-    return <GuideMessage>주문한 내역이 없습니다</GuideMessage>;
+    return <GuideMessage>주문내역이 없습니다</GuideMessage>;
   }
 
   const handleClickPageNumber = (number) => {

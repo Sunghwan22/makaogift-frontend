@@ -86,13 +86,15 @@ export default class ApiService {
     message,
   }) {
     const url = `${baseurl}/orders`;
-    await axios.post(url, {
+    const { data } = await axios.post(url, {
       productId, quantity, totalPrice, name, address, message,
     }, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
       },
     });
+    const { amount } = data;
+    return { amount };
   }
 
   async fetchOrderHistories(accessToken) {
@@ -122,8 +124,6 @@ export default class ApiService {
     const url = `${baseurl}/orders`;
 
     const { data } = await axios.get(url, orderHistoryPageConfig);
-
-    // const { data } = await axios.get(url, orderHistoryPageConfig);
 
     return data.orderHistories;
   }

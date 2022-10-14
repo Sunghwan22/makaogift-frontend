@@ -31,8 +31,10 @@ export default function App() {
   const [accessToken] = useLocalStorage('accessToken', '');
 
   useEffect(() => {
-    userStore.fetchUser(accessToken);
-    apiService.setAccessToken(accessToken);
+    if (accessToken) {
+      userStore.fetchUser(accessToken);
+      apiService.setAccessToken(accessToken);
+    }
   }, []);
 
   return (

@@ -94,7 +94,6 @@ export default function LoginForm() {
       setAccessToken(accessToken);
       apiService.setAccessToken(accessToken);
       navigate('/');
-      // todo 여기서 fetch
     }
 
     if (productId) {

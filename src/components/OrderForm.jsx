@@ -96,7 +96,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function Order() {
+export default function OrderForm() {
   const [accessToken] = useLocalStorage('accessToken', '');
 
   const navigate = useNavigate();
@@ -188,6 +188,7 @@ export default function Order() {
           <label htmlFor="input-address">받는 분 주소</label>
           <Input
             id="input-address"
+            placeholder="주소"
             {...register('address', { required: { value: true, message: '주소를 입력해주세요' } })}
             error={errors.address}
           />
@@ -203,6 +204,7 @@ export default function Order() {
             id="input-message"
             type="text"
             maxLength="100"
+            placeholder="메시지"
             {...register('message')}
           />
           <Guide>100글자이내로 입력해주세요</Guide>

@@ -5,6 +5,9 @@ export default class OrderStore {
     this.product = {};
     this.quantity = 0;
     this.totalPrice = 0;
+    this.name = '';
+    this.address = '';
+    this.message = '';
     this.errorMessage = '';
 
     this.orderHistories = [];
@@ -12,6 +15,8 @@ export default class OrderStore {
 
     this.pageNumber = 0;
     this.pageNumbers = [];
+
+    this.amount = 0;
 
     this.listeners = new Set();
   }
@@ -25,7 +30,8 @@ export default class OrderStore {
     message,
   }) {
     try {
-      await apiService.createOrder({
+      this.errorMessage = '';
+      const { amount } = await apiService.createOrder({
         productId,
         quantity,
         totalPrice,
@@ -33,10 +39,13 @@ export default class OrderStore {
         address,
         message,
       });
+      this.amount = amount;
+      return amount;
     } catch (e) {
       const { errorMessage } = e.response.data;
       this.errorMessage = errorMessage;
       this.publish();
+      return '';
     }
   }
 
